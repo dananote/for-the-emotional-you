@@ -1,8 +1,15 @@
+import GlobalStyle from "./styles/GlobalStyle";
+import Main from "./pages/Main";
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div>
-      hello world
-    </div>
+    <>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Main />} />
+      </Routes>
+    </>
   );
 }
 export default App;
