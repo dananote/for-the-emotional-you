@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 const Button = (props) => {
   const { type } = props;
   return (
-    <ButtonStyled type={type ? type : "button"} {...props}>
+    <ButtonStyled type={type ? type : "submit"} {...props}>
       {props.children}
     </ButtonStyled>
   );
@@ -13,10 +13,9 @@ const Button = (props) => {
 const ButtonStyled = styled.button`
   background-color: ${(props) => props.bgColor || "var(--black-color)"};
   color: ${(props) => props.textColor || "white"};
-  padding: ${(props) => props.padding || "16px 0 16px 0"};
+  padding: ${(props) => props.padding || "18px 0 18px 0"};
   font-family: ${(props) => props.font || "Pretendard-Medium"};
   cursor: pointer;
-  margin: 10px;
   border-radius: 6px;
   font-size: 16px;
   width: 100%;

@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
         --gray400-color: #979797;
         --gray500-color: #4B4B4B;
         --black-color: #000000;
+        --error-color: #FF3636;
     };
 
     body {

@@ -2,7 +2,11 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const Label = (props) => {
-  return <LabelLayout {...props}>{props.children}</LabelLayout>;
+  return (
+    <LabelLayout type="button" {...props}>
+      {props.children}
+    </LabelLayout>
+  );
 };
 
 const LabelLayout = styled.button`
