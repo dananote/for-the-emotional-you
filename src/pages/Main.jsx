@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+// recoil
+import { useRecoilState } from "recoil";
+import emotionMemo from "../recoil/emotionMemo";
 
 // components
 import Button from "../components/Button";
@@ -13,20 +17,79 @@ import CardList from "../components/CardList";
 import main from "../assets/main-img.jpg";
 
 export default function Main() {
+  const [isEmotionMemo, setIsEmotionMemo] = useRecoilState(emotionMemo);
+  const [memoData, setMemoData] = useState({
+    emotionLabels: "",
+    emotionTitle: "",
+    emotionContent: "",
+  });
+
+  const [emotionLabel, setEmotionLabel] = useState([]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMemoData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleJoin = (e) => {
+    e.preventDefault();
+    setMemoData((prevState) => ({
+      ...prevState,
+      emotionLabels: emotionLabel.join(),
+    }));
+
+    console.log("함수내:", memoData);
+
+    // submitData();
+    test();
+  };
+
+  const test = () => {
+    console.log("함수밖:", memoData);
+  };
+
+  const submitData = () => {
+    setIsEmotionMemo((prev) => {
+      const newArray = [...prev];
+      newArray.push(memoData);
+      return newArray;
+    });
+  };
+
   return (
     <MainLayout>
       <LeftLayout>
         <h1>오늘 너의 안좋은일 나한테 버려줘</h1>
         <p>일어났던 안좋은일이 괜찮아졌다면 마음을 비워봐!</p>
         <img src={main} alt="메인 아트 이미지" />
-        <LabelWrap>
-          <Label active={true}>😢 슬퍼요</Label>
-          <Label>😤 화나요</Label>
-          <Label>😓 힘들어요</Label>
-        </LabelWrap>
-        <Input placeholder={"어떤 안좋은 일이 있었어?"} />
-        <Textarea placeholder={"힘들었겠다 더 자세히 말해줘"} />
-        <Button>감정 버리기</Button>
+
+        <form onSubmit={handleJoin}>
+          <LabelWrap>
+            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
+              😢 슬퍼요
+            </Label>
+            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
+              😤 화나요
+            </Label>
+            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
+              😓 힘들어요
+            </Label>
+          </LabelWrap>
+          <Input
+            placeholder={"어떤 안좋은 일이 있었어?"}
+            onChange={handleInputChange}
+            name="emotionTitle"
+          />
+          <Textarea
+            placeholder={"힘들었겠다 더 자세히 말해줘"}
+            onChange={handleInputChange}
+            name="emotionContent"
+          />
+          <Button>감정 버리기</Button>
+        </form>
       </LeftLayout>
 
       <RightLayout>
@@ -44,7 +107,6 @@ const MainLayout = styled.article`
   gap: 40px;
 
   & article {
-    /* background-color: salmon; */
     width: 100%;
   }
 `;

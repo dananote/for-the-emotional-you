@@ -1,16 +1,39 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const Label = (props) => {
+  const { setEmotionLabel } = props;
+  const { emotionLabel } = props;
+  const [isActiveLabel, setIsActiveLabel] = useState(false);
+
+  const handleActive = (e) => {
+    setIsActiveLabel((prev) => !prev);
+    const newItem = e.target.innerText;
+    const isExist = emotionLabel.includes(newItem);
+    if (isExist) {
+      setEmotionLabel((prevArray) => {
+        return prevArray.filter((el) => el !== newItem);
+      });
+    } else {
+      setEmotionLabel((prevArray) => {
+        return [...prevArray, newItem];
+      });
+    }
+  };
+
   return (
-    <LabelLayout type="button" {...props}>
+    <LabelLayout
+      type="button"
+      className={isActiveLabel ? "active" : ""}
+      onClick={handleActive}
+      {...props}
+    >
       {props.children}
     </LabelLayout>
   );
 };
 
 const LabelLayout = styled.button`
-  /* display: inline-block; */
   cursor: pointer;
   padding: 8px 12px;
   font-family: "Pretendard-Medium";
@@ -18,24 +41,18 @@ const LabelLayout = styled.button`
   background-color: white;
   border: 1px solid var(--gray200-color);
   border-radius: 50px;
-  transition: all 0.3s;
+  box-sizing: border-box;
+  transition: all 0.1s;
 
   &:hover {
     background-color: var(--gray100-color);
   }
 
-  ${(props) =>
-    props.active &&
-    css`
-      background-color: var(--black-color);
-      color: white;
-      border: none;
-
-      &:hover {
-        background-color: var(--gray500-color);
-        border: none;
-      }
-    `}
+  &.active {
+    background-color: var(--black-color);
+    color: white;
+    border: 1px solid var(--black-color);
+  }
 `;
 
 export default Label;
