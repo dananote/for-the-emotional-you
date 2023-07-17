@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-const Label = (props) => {
-  const { setEmotionLabel } = props;
-  const { emotionLabel } = props;
+const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
   const [isActiveLabel, setIsActiveLabel] = useState(false);
+  const targetRef = useRef(null);
 
-  const handleActive = (e) => {
+  // console.log(text);
+
+  const handleActive = () => {
     setIsActiveLabel((prev) => !prev);
-    const newItem = e.target.innerText;
-    const isExist = emotionLabel.includes(newItem);
+    const selectLabel = targetRef.current.innerText;
+    const isExist = emotionLabel.includes(selectLabel);
+
     if (isExist) {
-      setEmotionLabel((prevArray) => {
-        return prevArray.filter((el) => el !== newItem);
+      setEmotionLabel((prev) => {
+        return prev.filter((el) => el !== selectLabel);
       });
     } else {
-      setEmotionLabel((prevArray) => {
-        return [...prevArray, newItem];
+      setEmotionLabel((prev) => {
+        const newArray = [...prev];
+        newArray.push(selectLabel);
+        return newArray;
       });
     }
   };
 
+  useEffect(() => {
+    setIsActiveLabel(false);
+  }, [isReset]);
+
   return (
     <LabelLayout
+      ref={targetRef}
       type="button"
       className={isActiveLabel ? "active" : ""}
       onClick={handleActive}
-      {...props}
     >
-      {props.children}
+      {text}
     </LabelLayout>
   );
 };

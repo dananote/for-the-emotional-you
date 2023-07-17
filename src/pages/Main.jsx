@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 // recoil
@@ -18,46 +18,52 @@ import main from "../assets/main-img.jpg";
 
 export default function Main() {
   const [isEmotionMemo, setIsEmotionMemo] = useRecoilState(emotionMemo);
+  const [label, setLabel] = useState(["😢 슬퍼요", "😤 화나요", "😓 힘들어요"]);
   const [memoData, setMemoData] = useState({
     emotionLabels: "",
     emotionTitle: "",
     emotionContent: "",
   });
 
+  const [isReset, setIsReset] = useState(false);
   const [emotionLabel, setEmotionLabel] = useState([]);
+  const [isTitle, setIsTitle] = useState("");
+  const [isContent, setIsContent] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "emotionTitle") {
+      setIsTitle(value);
+    } else {
+      setIsContent(value);
+    }
+
     setMemoData((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+
+    setMemoData((prevState) => ({
+      ...prevState,
+      emotionLabels: emotionLabel.join(),
     }));
   };
 
   const handleJoin = (e) => {
     e.preventDefault();
-    setMemoData((prevState) => ({
-      ...prevState,
-      emotionLabels: emotionLabel.join(),
-    }));
+    setIsTitle("");
+    setIsContent("");
+    setIsReset((prev) => !prev);
 
-    console.log("함수내:", memoData);
-
-    // submitData();
-    test();
-  };
-
-  const test = () => {
-    console.log("함수밖:", memoData);
-  };
-
-  const submitData = () => {
     setIsEmotionMemo((prev) => {
       const newArray = [...prev];
       newArray.push(memoData);
       return newArray;
     });
   };
+
+  console.log(memoData);
 
   return (
     <MainLayout>
@@ -68,25 +74,29 @@ export default function Main() {
 
         <form onSubmit={handleJoin}>
           <LabelWrap>
-            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
-              😢 슬퍼요
-            </Label>
-            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
-              😤 화나요
-            </Label>
-            <Label setEmotionLabel={setEmotionLabel} emotionLabel={emotionLabel}>
-              😓 힘들어요
-            </Label>
+            {label.map((el, index) => {
+              return (
+                <Label
+                  key={index}
+                  isReset={isReset}
+                  setEmotionLabel={setEmotionLabel}
+                  emotionLabel={emotionLabel}
+                  text={el}
+                />
+              );
+            })}
           </LabelWrap>
           <Input
             placeholder={"어떤 안좋은 일이 있었어?"}
             onChange={handleInputChange}
             name="emotionTitle"
+            value={isTitle}
           />
           <Textarea
             placeholder={"힘들었겠다 더 자세히 말해줘"}
             onChange={handleInputChange}
             name="emotionContent"
+            value={isContent}
           />
           <Button>감정 버리기</Button>
         </form>
