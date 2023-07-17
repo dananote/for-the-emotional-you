@@ -5,8 +5,6 @@ const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
   const [isActiveLabel, setIsActiveLabel] = useState(false);
   const targetRef = useRef(null);
 
-  // console.log(text);
-
   const handleActive = () => {
     setIsActiveLabel((prev) => !prev);
     const selectLabel = targetRef.current.innerText;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // recoil
 import { useRecoilState } from "recoil";
@@ -23,12 +23,24 @@ export default function Main() {
     emotionLabels: "",
     emotionTitle: "",
     emotionContent: "",
+    date: "",
   });
 
   const [isReset, setIsReset] = useState(false);
   const [emotionLabel, setEmotionLabel] = useState([]);
   const [isTitle, setIsTitle] = useState("");
   const [isContent, setIsContent] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isTest, setIsTest] = useState([]);
+
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,20 +62,42 @@ export default function Main() {
     }));
   };
 
+  const handleError = () => {
+    if (isTitle === "") {
+      setErrorMessage("제목을 입력해주세요");
+    } else if (isContent === "") {
+      setErrorMessage("감정 내용을 입력해주세요");
+    } else {
+      setErrorMessage("");
+      const currentDate = getCurrentDate();
+
+      setMemoData((prevState) => ({
+        ...prevState,
+        date: currentDate,
+      }));
+    }
+  };
+
+  console.log(errorMessage);
+
   const handleJoin = (e) => {
     e.preventDefault();
-    setIsTitle("");
-    setIsContent("");
-    setIsReset((prev) => !prev);
 
-    setIsEmotionMemo((prev) => {
-      const newArray = [...prev];
-      newArray.push(memoData);
-      return newArray;
-    });
+    if (isTitle !== "" && isContent !== "") {
+      setIsTitle("");
+      setIsContent("");
+      setIsReset((prev) => !prev);
+
+      setIsTest((prev) => {
+        const newArray = [...prev];
+        newArray.push(memoData);
+        return newArray;
+      });
+    }
   };
 
   console.log(memoData);
+  console.log(isTest);
 
   return (
     <MainLayout>
@@ -74,7 +108,7 @@ export default function Main() {
 
         <form onSubmit={handleJoin}>
           <LabelWrap>
-            {label.map((el, index) => {
+            {label?.map((el, index) => {
               return (
                 <Label
                   key={index}
@@ -91,14 +125,20 @@ export default function Main() {
             onChange={handleInputChange}
             name="emotionTitle"
             value={isTitle}
+            hasError={errorMessage === "제목을 입력해주세요"}
           />
+          {errorMessage === "제목을 입력해주세요" && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <Textarea
             placeholder={"힘들었겠다 더 자세히 말해줘"}
             onChange={handleInputChange}
             name="emotionContent"
             value={isContent}
+            hasError={errorMessage === "감정 내용을 입력해주세요"}
           />
-          <Button>감정 버리기</Button>
+          {errorMessage === "감정 내용을 입력해주세요" && (
+            <ErrorMessage>{errorMessage}</ErrorMessage>
+          )}
+          <Button onClick={handleError}>감정 버리기</Button>
         </form>
       </LeftLayout>
 
@@ -141,7 +181,7 @@ const LeftLayout = styled.article`
   }
 
   & input {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 `;
 
@@ -150,10 +190,16 @@ const LabelWrap = styled.div`
   gap: 12px;
   margin: 32px 0 16px 0;
 `;
+
 const RightLayout = styled.article`
   position: relative;
 
   & > div {
     margin-top: 60px;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: var(--error-color);
+  font-size: 14px;
 `;
