@@ -23,9 +23,17 @@ const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
     }
   };
 
-  useEffect(() => {
-    setIsActiveLabel(false);
-  }, [isReset]);
+  useEffect(
+    () => {
+      if (targetRef.current.innerText === "😢 슬퍼요") {
+        setIsActiveLabel(true);
+      } else {
+        setIsActiveLabel(false);
+      }
+    },
+    [isReset],
+    [],
+  );
 
   return (
     <LabelLayout

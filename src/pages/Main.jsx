@@ -27,11 +27,10 @@ export default function Main() {
   });
 
   const [isReset, setIsReset] = useState(false);
-  const [emotionLabel, setEmotionLabel] = useState([]);
+  const [emotionLabel, setEmotionLabel] = useState(["😢 슬퍼요"]);
   const [isTitle, setIsTitle] = useState("");
   const [isContent, setIsContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isTest, setIsTest] = useState([]);
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -78,26 +77,25 @@ export default function Main() {
     }
   };
 
-  console.log(errorMessage);
-
   const handleJoin = (e) => {
     e.preventDefault();
 
     if (isTitle !== "" && isContent !== "") {
       setIsTitle("");
       setIsContent("");
+      setEmotionLabel((prev) => {
+        const newArray = ["😢 슬퍼요"];
+        return newArray;
+      });
       setIsReset((prev) => !prev);
 
-      setIsTest((prev) => {
+      setIsEmotionMemo((prev) => {
         const newArray = [...prev];
         newArray.push(memoData);
         return newArray;
       });
     }
   };
-
-  console.log(memoData);
-  console.log(isTest);
 
   return (
     <MainLayout>
