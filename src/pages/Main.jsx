@@ -130,6 +130,7 @@ export default function Main() {
             placeholder={"힘들었겠다 더 자세히 말해줘"}
             onChange={handleInputChange}
             name="emotionContent"
+            setIsContent={setIsContent}
             value={isContent}
             hasError={errorMessage === "감정 내용을 입력해주세요"}
           />

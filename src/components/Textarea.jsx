@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 const Textarea = (props) => {
+  const { setIsContent } = props;
+  const { value } = props;
+
+  useEffect(() => {
+    if (value.length > 100) {
+      setIsContent(value.slice(0, 100));
+    }
+  }, [value]);
+
   return (
     <>
       <InputStyled placeholder={props.placeholder} {...props} />
-      <CountText>0 / 100</CountText>
+      <CountText>{value.length ? value.length : 0} / 100</CountText>
     </>
   );
 };
