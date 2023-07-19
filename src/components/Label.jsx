@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
+const Label = ({ isReset, setEmotionLabel, emotionLabel, text, isButton }) => {
   const [isActiveLabel, setIsActiveLabel] = useState(false);
   const targetRef = useRef(null);
 
@@ -25,7 +25,7 @@ const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
 
   useEffect(
     () => {
-      if (targetRef.current.innerText === "😢 슬퍼요") {
+      if (isButton && targetRef.current.innerText === "😢 슬퍼요") {
         setIsActiveLabel(true);
       } else {
         setIsActiveLabel(false);
@@ -36,14 +36,22 @@ const Label = ({ isReset, setEmotionLabel, emotionLabel, text }) => {
   );
 
   return (
-    <LabelLayout
-      ref={targetRef}
-      type="button"
-      className={isActiveLabel ? "active" : ""}
-      onClick={handleActive}
-    >
-      {text}
-    </LabelLayout>
+    <>
+      {isButton ? (
+        <LabelLayout
+          ref={targetRef}
+          type="button"
+          className={isActiveLabel ? "active" : ""}
+          onClick={handleActive}
+        >
+          {text}
+        </LabelLayout>
+      ) : (
+        <>
+          <LabelTag> {text} </LabelTag>
+        </>
+      )}
+    </>
   );
 };
 
@@ -67,6 +75,16 @@ const LabelLayout = styled.button`
     color: white;
     border: 1px solid var(--black-color);
   }
+`;
+
+const LabelTag = styled.div`
+  padding: 6px 10px;
+  font-family: "Pretendard-Medium";
+  font-size: 13px;
+  background-color: white;
+  border: 1px solid var(--gray200-color);
+  border-radius: 50px;
+  box-sizing: border-box;
 `;
 
 export default Label;

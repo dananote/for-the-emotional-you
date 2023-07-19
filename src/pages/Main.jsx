@@ -25,7 +25,7 @@ export default function Main() {
     emotionContent: "",
     date: "",
   });
-
+  const [isButton, setIsButton] = useState(true);
   const [isReset, setIsReset] = useState(false);
   const [emotionLabel, setEmotionLabel] = useState(["😢 슬퍼요"]);
   const [isTitle, setIsTitle] = useState("");
@@ -57,7 +57,7 @@ export default function Main() {
 
     setMemoData((prevState) => ({
       ...prevState,
-      emotionLabels: emotionLabel.join(),
+      emotionLabels: emotionLabel,
     }));
   };
 
@@ -114,6 +114,7 @@ export default function Main() {
                   setEmotionLabel={setEmotionLabel}
                   emotionLabel={emotionLabel}
                   text={el}
+                  isButton={isButton}
                 />
               );
             })}

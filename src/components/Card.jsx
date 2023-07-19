@@ -1,27 +1,40 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components";
+
+// recoil
+import { useRecoilState } from "recoil";
+import emotionMemo from "../recoil/emotionMemo";
 
 // components
 import Label from "./Label";
 import Button from "./Button";
 
-const Card = () => {
+const Card = ({ labels, title, contents, date }) => {
+  const [isMemo, setIsMemo] = useRecoilState(emotionMemo);
+  const [isButton, setIsButton] = useState(false);
+
+  const handleDelete = (e) => {
+    const targetItem = e.target.previousSibling.innerText;
+    const updatedItems = isMemo.filter((item) => item.emotionContent !== targetItem);
+    setIsMemo(updatedItems);
+  };
+
+  console.log(isMemo);
+
   return (
     <CardLayout>
       <TopWrap>
         <LabelWrap>
-          <Label>😤 화나요</Label>
-          <Label>😓 힘들어요</Label>
+          {labels?.map((el, index) => {
+            return <Label key={index} text={el} isButton={isButton} />;
+          })}
         </LabelWrap>
-        <p>2023.04.25</p>
+        <p>{date}</p>
       </TopWrap>
 
-      <h3>회사에서 상사에게 혼나서 기분이 좋지 않아</h3>
-      <p>
-        오늘 회사에서 이런저런 일이 있어서 상사한테 혼났는데 너무 억울해 그건 내가 한게 아닌데..
-        다른사람한테 말하기엔 너무 찡찡거리는거 같고 답답해!!
-      </p>
-      <Button padding={"14px 0 14px 0"} font={"Pretendard-Regular"}>
+      <h3>{title}</h3>
+      <p>{contents}</p>
+      <Button onClick={handleDelete} padding={"14px 0 14px 0"} font={"Pretendard-Regular"}>
         마음 비우기
       </Button>
     </CardLayout>
