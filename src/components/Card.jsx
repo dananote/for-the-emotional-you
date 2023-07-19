@@ -19,8 +19,6 @@ const Card = ({ labels, title, contents, date }) => {
     setIsMemo(updatedItems);
   };
 
-  console.log(isMemo);
-
   return (
     <CardLayout>
       <TopWrap>

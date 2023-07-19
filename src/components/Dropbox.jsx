@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 // icon
@@ -7,29 +7,92 @@ import iconCheckboxActive from "../assets/Icons/icon_checkbox-active.svg";
 import iconCheckbox from "../assets/Icons/icon_checkbox.svg";
 
 const Dropbox = (props) => {
+  const { setViewMemo, memo } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const [isActive, setIsActive] = useState("모든 감정");
+  const [dropboxName, setDropboxName] = useState("모든 감정");
+  const dropdownRef = useRef(null);
+
+  // console.log(viewMemo[0].emotionLabels);
+
+  const handleFilter = (e) => {
+    const filterItem = e.target.innerText;
+    const newArray = memo.filter((el) => el.emotionLabels.includes(filterItem));
+    setViewMemo(newArray);
+    setIsOpen(false);
+    setDropboxName(filterItem);
+    setIsActive(filterItem);
+  };
+
+  const handleAllView = () => {
+    setViewMemo(memo);
+    setIsOpen(false);
+    setDropboxName("모든 감정");
+  };
+
+  const handleNav = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  });
+
   return (
-    <DropboxLayout>
-      <DropboxButton>
-        {props.text}
-        <img src={iconArrow} alt="화살표 아이콘" />
+    <DropboxLayout ref={dropdownRef}>
+      <DropboxButton onClick={handleNav}>
+        {dropboxName}
+        <img src={iconArrow} alt="화살표 아이콘" className={isOpen ? "rotate" : ""} />
       </DropboxButton>
 
-      <DropboxList>
-        <DrobboxItem>
-          <img src={iconCheckboxActive} alt="체크박스 아이콘" />
-          <p>모든 감정</p>
-        </DrobboxItem>
+      {isOpen && (
+        <DropboxList>
+          <DropboxItem onClick={handleAllView} className={isActive === "모든 감정" ? "active" : ""}>
+            <img
+              src={isActive === "모든 감정" ? iconCheckboxActive : iconCheckbox}
+              alt="체크박스 아이콘"
+            />
+            모든 감정
+          </DropboxItem>
 
-        <DrobboxItem>
-          <img src={iconCheckboxActive} alt="체크박스 아이콘" />
-          <p>모든 감정</p>
-        </DrobboxItem>
+          <DropboxItem onClick={handleFilter} className={isActive === "😢 슬퍼요" ? "active" : ""}>
+            <img
+              src={isActive === "😢 슬퍼요" ? iconCheckboxActive : iconCheckbox}
+              alt="체크박스 아이콘"
+            />
+            😢 슬퍼요
+          </DropboxItem>
 
-        <DrobboxItem>
-          <img src={iconCheckboxActive} alt="체크박스 아이콘" />
-          <p>모든 감정</p>
-        </DrobboxItem>
-      </DropboxList>
+          <DropboxItem
+            onClick={handleFilter}
+            className={isActive === "😓 힘들어요" ? "active" : ""}
+          >
+            <img
+              src={isActive === "😓 힘들어요" ? iconCheckboxActive : iconCheckbox}
+              alt="체크박스 아이콘"
+            />
+            😓 힘들어요
+          </DropboxItem>
+
+          <DropboxItem onClick={handleFilter} className={isActive === "😤 화나요" ? "active" : ""}>
+            <img
+              src={isActive === "😤 화나요" ? iconCheckboxActive : iconCheckbox}
+              alt="체크박스 아이콘"
+            />
+            😤 화나요
+          </DropboxItem>
+        </DropboxList>
+      )}
     </DropboxLayout>
   );
 };
@@ -56,6 +119,11 @@ const DropboxButton = styled.button`
   & img {
     width: 16px;
     text-align: right;
+    transition: all 0.3s;
+  }
+
+  .rotate {
+    transform: rotate(-180deg);
   }
 `;
 
@@ -67,21 +135,26 @@ const DropboxList = styled.ul`
   padding: 16px 0;
   margin-top: 8px;
   box-shadow: -4px 4px 10px rgb(0, 0, 0, 0.08);
+
+  .active {
+    background-color: var(--gray100-color);
+  }
 `;
-const DrobboxItem = styled.li`
+const DropboxItem = styled.li`
   cursor: pointer;
-  background-color: var(--gray100-color);
   display: flex;
   gap: 12px;
   padding: 12px;
+  font-size: 14px;
+  font-family: "Pretendard-Medium";
 
   & img {
     width: 16px;
+    margin-right: 12px;
   }
 
-  & p {
-    font-size: 14px;
-    font-family: "Pretendard-Medium";
+  &:hover {
+    background-color: var(--gray100-color);
   }
 `;
 

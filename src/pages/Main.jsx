@@ -143,7 +143,6 @@ export default function Main() {
       </LeftLayout>
 
       <RightLayout>
-        <Dropbox text={"모든 감정"} />
         <CardList />
       </RightLayout>
     </MainLayout>
@@ -193,10 +192,6 @@ const LabelWrap = styled.div`
 
 const RightLayout = styled.article`
   position: relative;
-
-  & > div {
-    margin-top: 60px;
-  }
 `;
 
 const ErrorMessage = styled.p`
