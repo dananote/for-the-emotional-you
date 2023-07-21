@@ -24,10 +24,12 @@ const Dropbox = (props) => {
     setIsActive(filterItem);
   };
 
-  const handleAllView = () => {
+  const handleAllView = (e) => {
+    const filterItem = e.target.innerText;
     setViewMemo(memo);
     setIsOpen(false);
     setDropboxName("모든 감정");
+    setIsActive(filterItem);
   };
 
   const handleNav = () => {

@@ -27,7 +27,7 @@ const CardList = () => {
 
   return (
     <>
-      <Dropbox text={"모든 감정"} setViewMemo={setViewMemo} memo={memo} />
+      <Dropbox setViewMemo={setViewMemo} memo={memo} />
       <CardListLayout>
         {memo.length === 0 ? (
           <DefaultTextLayout>
