@@ -10,8 +10,8 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Label from "../components/Label";
 import Textarea from "../components/Textarea";
-import Dropbox from "../components/Dropbox";
 import CardList from "../components/CardList";
+import Modal from "../components/Modal";
 
 // image
 import main from "../assets/main-img.jpg";
@@ -99,6 +99,7 @@ export default function Main() {
 
   return (
     <MainLayout>
+      <Modal />
       <LeftLayout>
         <h1>오늘 너의 안좋은일 나한테 버려줘</h1>
         <p>일어났던 안좋은일이 괜찮아졌다면 마음을 비워봐!</p>
@@ -155,13 +156,13 @@ const MainLayout = styled.article`
   display: flex;
   gap: 40px;
 
-  & article {
+  & > article {
     width: 100%;
   }
 `;
 
 const LeftLayout = styled.article`
-  & h1 {
+  h1 {
     font-family: "Pretendard-Bold";
     font-size: 28px;
   }
@@ -173,13 +174,13 @@ const LeftLayout = styled.article`
     margin: 16px 0 32px 0;
   }
 
-  & img {
+  img {
     display: block;
     width: 75%;
     margin: 0 auto;
   }
 
-  & input {
+  input {
     margin-bottom: 24px;
   }
 `;
