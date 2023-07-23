@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+
+// recoil
+import { useRecoilState } from "recoil";
+import emotionMemo from "../recoil/emotionMemo";
 
 //component
 import Button from "./Button";
@@ -7,7 +11,22 @@ import Button from "./Button";
 // image
 import imgModal from "../assets/modal-img.png";
 
-const Modal = () => {
+const Modal = ({ targetItem, setShowModal, showModal }) => {
+  const [isMemo, setIsMemo] = useRecoilState(emotionMemo);
+
+  const handleDelete = () => {
+    const updatedItems = isMemo.filter((item) => item.emotionContent !== targetItem);
+    setIsMemo(updatedItems);
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    const body = document.body;
+    if (showModal) {
+      body.style.overflow = "hidden";
+    }
+  });
+
   return (
     <ModalLayout>
       <ModalContent>
@@ -16,12 +35,12 @@ const Modal = () => {
             다 괜찮아 질꺼야
             <br /> 지금까지 잘 해왔잖아?
           </p>
-          <Button bgColor="white" textColor="var(--black-color)">
+          <Button onClick={handleDelete} bgColor="white" textColor="var(--black-color)">
             고마워 마음이 편해졌어
           </Button>
         </ModalWrap>
 
-        <img src={imgModal} alt="" />
+        <img src={imgModal} alt="모달 이미지" />
       </ModalContent>
     </ModalLayout>
   );

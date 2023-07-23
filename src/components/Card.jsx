@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-// recoil
-import { useRecoilState } from "recoil";
-import emotionMemo from "../recoil/emotionMemo";
-
 // components
 import Label from "./Label";
 import Button from "./Button";
+import Modal from "../components/Modal";
 
 const Card = ({ labels, title, contents, date }) => {
-  const [isMemo, setIsMemo] = useRecoilState(emotionMemo);
+  const [showModal, setShowModal] = useState(false);
+  const [targetItem, setTargetItem] = useState(null);
   const [isButton, setIsButton] = useState(false);
 
-  const handleDelete = (e) => {
+  const handleModal = (e) => {
     const targetItem = e.target.previousSibling.innerText;
-    const updatedItems = isMemo.filter((item) => item.emotionContent !== targetItem);
-    setIsMemo(updatedItems);
+    setTargetItem(targetItem);
+    setShowModal(true);
   };
+
+  console.log(targetItem);
 
   return (
     <CardLayout>
+      {showModal && (
+        <Modal targetItem={targetItem} setShowModal={setShowModal} showModal={showModal} />
+      )}
       <TopWrap>
         <LabelWrap>
           {labels?.map((el, index) => {
@@ -32,7 +35,7 @@ const Card = ({ labels, title, contents, date }) => {
 
       <h3>{title}</h3>
       <p>{contents}</p>
-      <Button onClick={handleDelete} padding={"14px 0 14px 0"} font={"Pretendard-Regular"}>
+      <Button onClick={handleModal} padding={"14px 0 14px 0"} font={"Pretendard-Regular"}>
         마음 비우기
       </Button>
     </CardLayout>

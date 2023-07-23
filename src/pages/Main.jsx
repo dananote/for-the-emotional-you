@@ -11,7 +11,6 @@ import Input from "../components/Input";
 import Label from "../components/Label";
 import Textarea from "../components/Textarea";
 import CardList from "../components/CardList";
-import Modal from "../components/Modal";
 
 // image
 import main from "../assets/main-img.jpg";
@@ -99,7 +98,6 @@ export default function Main() {
 
   return (
     <MainLayout>
-      <Modal />
       <LeftLayout>
         <h1>오늘 너의 안좋은일 나한테 버려줘</h1>
         <p>일어났던 안좋은일이 괜찮아졌다면 마음을 비워봐!</p>
