@@ -11,8 +11,13 @@ import Button from "./Button";
 // image
 import imgModal from "../assets/modal-img.png";
 
+// data
+import mindComment from "../mock/mindComment";
+
 const Modal = ({ targetItem, setShowModal, showModal }) => {
   const [isMemo, setIsMemo] = useRecoilState(emotionMemo);
+
+  const randomComment = Math.floor(Math.random() * mindComment.length);
 
   const handleDelete = () => {
     const updatedItems = isMemo.filter((item) => item.emotionContent !== targetItem);
@@ -31,10 +36,7 @@ const Modal = ({ targetItem, setShowModal, showModal }) => {
     <ModalLayout>
       <ModalContent>
         <ModalWrap>
-          <p>
-            다 괜찮아 질꺼야
-            <br /> 지금까지 잘 해왔잖아?
-          </p>
+          <p>{mindComment[randomComment]}</p>
           <Button onClick={handleDelete} bgColor="white" textColor="var(--black-color)">
             고마워 마음이 편해졌어
           </Button>
