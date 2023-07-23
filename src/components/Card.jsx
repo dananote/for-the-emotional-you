@@ -17,8 +17,6 @@ const Card = ({ labels, title, contents, date }) => {
     setShowModal(true);
   };
 
-  console.log(targetItem);
-
   return (
     <CardLayout>
       {showModal && (
