@@ -1,6 +1,4 @@
-<p style="color: #979797">개발일정: 2023.07.15 - 2023.07.16</p>
-<div align="center">
-    <h1><b>💖 F인 너를 위해</b></h1>
+<h1><b>💖 F인 너를 위해</b></h1>
 		<p>감성적인 F인 당신을 위한 내 감정 메모장입니다! 감정을 버리고 위로를 받아가세요!</p>
 		<br/>
 
@@ -31,7 +29,8 @@
 
 ## ⚙️ **2. 기술 스택**
 
-<img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<div>
+	<img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
 <img src="https://img.shields.io/badge/javascript-E34F26?style=for-the-badge&logo=javascript&logoColor=white">
 <img src="https://img.shields.io/badge/css3-F7DF1E?style=for-the-badge&logo=css3&logoColor=white">
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
@@ -39,11 +38,38 @@
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+</div>
 
 <br />
 <br />
 
-## 💻 **3. Commit Convention**
+## 🤗 **3. 서비스 소개**
+### 1.현재 감정상태를 선택하고 감정을 적어주세요
+
+<img src="https://github.com/dananote/for-the-emotional-you/assets/124513796/46ccb737-7971-4227-bc11-458cbc94f6b3" width="800px"/>
+
+<br />
+
+### 2. 필터기능으로 감정별로 카드를 볼수 있어요
+
+<img src="https://github.com/dananote/for-the-emotional-you/assets/124513796/d3797f37-4277-433d-9a3a-1e21f46ce9be" width="800px"/>
+
+<br />
+
+### 3. 정리된 감정을 비워주세요
+
+<img src="https://github.com/dananote/for-the-emotional-you/assets/124513796/39335233-d9f5-43cd-8e22-c0a15f4c1fe1" width="800px"/>
+
+<br />
+
+### 4. 반응형으로 다양한 기기에서도 이용해보세요
+
+<img src="https://github.com/dananote/for-the-emotional-you/assets/124513796/b7185629-c16a-4952-bbad-d7e6fa2f8197" width="800px"/>
+
+<br />
+<br />
+
+## 💻 **4. Commit Convention**
 
 ```
 ✨ feat: 기능 추가, 삭제, 변경
