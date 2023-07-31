@@ -12,7 +12,7 @@ import Dropbox from "./Dropbox";
 // image
 import defaultImg from "../assets/deFault-img.jpg";
 
-const CardList = () => {
+const CardList = ({ isMobile }) => {
   const memo = useRecoilValue(emotionMemo);
   const memoData = [...memo].reverse();
   const [viewMemo, setViewMemo] = useState(null);
@@ -28,7 +28,7 @@ const CardList = () => {
   return (
     <>
       <Dropbox setViewMemo={setViewMemo} memo={memo} />
-      <CardListLayout>
+      <CardListLayout isMobile={isMobile}>
         {memo.length === 0 ? (
           <DefaultTextLayout>
             <img src={defaultImg} alt="게시물이 없을시 나오는 기본 이미지" />
@@ -54,7 +54,7 @@ const CardList = () => {
 
 const CardListLayout = styled.div`
   margin-top: 60px;
-  height: 650px;
+  height: ${(props) => (props.isMobile ? "100%" : "650px")};
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
